@@ -5,7 +5,7 @@ const filesToCache = [
   "hp.css",
   "hp.js",
   "manifest.json",
-  "icon-192.png",
+  "hp192.png",
   "icon-512.png"
 ];
 
@@ -24,3 +24,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
