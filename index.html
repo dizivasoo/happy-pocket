@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFC107">
+  <meta name="theme-color" content="#FFC107">
   <meta charset="UTF-8">
   <title>HappyPocket</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,60 +10,49 @@
 </head>
 
 <body>
-<!-- ===== Splash Screen ===== -->
-<div id="splashScreen" class="splash-screen">
-  <div class="splash-card">
-
-    <div class="rupee-icon">₹</div>
- 
-    <h2>Welcome to Happy Pocket</h2>
-    <p>Set Your Main Budget</p>
-
-    <input 
-      type="number" 
-      id="budgetInput" 
-      placeholder="Enter Budget Amount"
-      inputmode="numeric"
-    >
-
-    <button onclick="startApp()">Start</button>
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-card">
+      <div class="rupee-icon">₹</div>
+      <h2>Welcome to Happy Pocket</h2>
+      <p>Set Your Main Budget</p>
+      <input type="number" id="budgetInput" placeholder="Enter Budget Amount" inputmode="numeric">
+      <button onclick="startApp()">Start</button>
+    </div>
   </div>
-</div>
 
-  <!-- ===== App Header ===== -->
   <header class="app-header">
-  <div class="app-title">Happy Pocket</div>
-  <button class="reset-btn" onclick="resetBudget()">Reset</button>
-</header>
- 6
-  <!-- ===== Hero Balance Section ===== -->
+    <div class="app-title">Happy Pocket</div>
+    <div class="header-actions">
+        <button id="installBtn" class="download-btn hidden">
+          <span>Install App</span>
+        </button>
+        <button class="reset-btn" onclick="resetBudget()">Reset</button>
+    </div>
+  </header>
+
   <section class="top-bar">
     <div class="budget-overlay">Budget ₹5000</div>
     <h3>Remaining Balance</h3>
     <h1 id="total">₹5000</h1>
 
-    <!-- Progress Bar -->
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
     <div class="progress-text" id="progressText">0% used</div>
   </section>
 
-  <!-- ===== Expense List ===== -->
   <main class="container">
     <div id="expenseList"></div>
   </main>
 
-  <!-- ===== Floating Add Button ===== -->
-  <button class="fab" onclick="openAddModal()">+</button>
+  <div class="fab-container">
+    <button class="fab earn-fab" onclick="openEarnModal()" title="Add Income">💰</button>
+    <button class="fab expense-fab" onclick="openAddModal()" title="Add Expense">+</button>
+  </div>
 
-  <!-- ===== Add Expense Modal ===== -->
-  <div id="modal" class="modal hidden">
-    <div class="modal-content">
-      
+  <div id="modal" class="modal hidden" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <h3>Add Expense</h3>
-
-      <!-- Category Dropdown -->
       <div class="select-wrapper">
         <select id="reasonSelect">
           <option value="">Select Category</option>
@@ -73,39 +62,31 @@
           <option value="Bills">Bills</option>
           <option value="Entertainment">Entertainment</option>
           <option value="Health">Health</option>
-          <option value="Education">Education</option>
-          <option value="Recharge">Recharge</option>
-          <option value="Subscriptions">Subscriptions</option>
           <option value="Other">Other</option>
-          <option value="Custom">+ Add Custom</option>
         </select>
       </div>
+      <input type="number" id="amount" placeholder="Amount" inputmode="numeric">
+      <button class="add-btn" onclick="addExpense()">Add Expense</button>
+    </div>
+  </div>
 
-      <!-- Custom Reason Input -->
-      <input 
-        type="text" 
-        id="customReason" 
-        placeholder="Enter custom reason"
-        class="hidden"
-      >
-
-      <!-- Amount Input -->
-      <input 
-        type="number" 
-        id="amount" 
-        placeholder="Amount"
-        inputmode="numeric"
-      >
-
-      <!-- Add Button -->
-      <button class="add-btn" onclick="addExpense()">
-        Add Expense
-      </button>
-
+  <div id="earnModal" class="modal hidden" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h3>Add Income</h3>
+      <p>Add money to your pocket</p>
+      <input type="number" id="earnAmount" placeholder="Enter Amount" inputmode="numeric">
+      <button class="add-btn earn-submit-btn" onclick="addEarn()">Add Money</button>
     </div>
   </div>
 
   <script src="hp.js"></script>
+  <script>
+    // Registering the Service Worker for the "Download" (Install) feature
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker Registered"));
+    }
+  </script>
 
 </body>
 </html>
